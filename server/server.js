@@ -53,11 +53,19 @@ if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.join(__dirname, 'client/build');
   
   // Serve static files
-  app.use(express.static(clientBuildPath));
+  app.use(express.static(clientBuildPath, {
+    maxAge: '1y',
+    etag: true,
+    lastModified: true
+  }));
 
   // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
+    res.sendFile(path.join(clientBuildPath, 'index.html'), {
+      maxAge: '0',
+      etag: true,
+      lastModified: true
+    });
   });
 }
 
