@@ -11,7 +11,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "cd client && npm install && npm run build",
     "build:server": "cd server && npm install",
-    "vercel-build": "npm install && npm run build:client && npm run build:server",
+    "vercel-build": "npm install && npm run build:client && npm run build:server && cp -r client/build/* ./",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build:client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "install-all": "npm install && npm run build:client && npm run build:server",
