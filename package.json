@@ -8,14 +8,11 @@
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm run build:client && npm run build:server",
+    "build": "npm run build:client",
     "build:client": "cd client && npm install && npm run build",
-    "build:server": "cd server && npm install",
-    "vercel-build": "npm install && npm run build:client && npm run build:server",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build:client",
+    "vercel-build": "cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install-all": "npm install && npm run build:client && npm run build:server",
-    "lint": "eslint . --ext .js,.jsx"
+    "install-all": "npm install && cd client && npm install"
   },
   "dependencies": {
     "concurrently": "^8.2.0",
