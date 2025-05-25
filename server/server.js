@@ -35,7 +35,6 @@ initSlack({
 });
 
 const app = express();
-const PORT = process.env.PORT || 5002;
 
 // Middleware
 app.use(cors());
@@ -47,9 +46,24 @@ app.use('/api/todos', todoRoutes);
 // Error handling middleware
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  });
+}
 
+// Create a serverless function handler
 export default app;
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const port = process.env.PORT || 5002;
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
