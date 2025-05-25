@@ -153,6 +153,47 @@ todo-summary-assistant/
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## Deployment
+
+### Vercel Deployment
+
+1. **Prerequisites**
+   - Install the Vercel CLI (if deploying manually):
+     ```bash
+     npm install -g vercel
+     ```
+   - Make sure all environment variables are set in your local `.env` file
+
+2. **Deploy using Vercel CLI**
+   ```bash
+   # Login to Vercel (if not already logged in)
+   vercel login
+   
+   # Link your project (first time only)
+   vercel link
+   
+   # Deploy to production
+   vercel --prod
+   ```
+
+3. **Environment Variables in Vercel**
+   - Go to your Vercel project settings
+   - Navigate to "Environment Variables"
+   - Add the following environment variables:
+     ```
+     NODE_ENV=production
+     GEMINI_API_KEY=your_gemini_api_key
+     GEMINI_MODEL=gemini-2.0-flash
+     SLACK_WEBHOOK_URL=your_slack_webhook_url
+     SLACK_CHANNEL=your_slack_channel
+     SLACK_BOT_TOKEN=your_slack_bot_token
+     ```
+
+4. **GitHub Integration (Recommended)**
+   - Connect your GitHub repository to Vercel
+   - Enable automatic deployments on push to main/master branch
+   - Vercel will automatically build and deploy your application
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -163,3 +204,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Material-UI](https://mui.com/)
 - [OpenAI API](https://platform.openai.com/)
 - [Slack API](https://api.slack.com/)
+- [Vercel](https://vercel.com/)

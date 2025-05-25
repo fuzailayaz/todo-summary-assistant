@@ -7,12 +7,13 @@ import { fileURLToPath } from 'url';
 import { errorHandler } from './middleware/errorMiddleware.js';
 import { initSlack } from './utils/slack.js';
 
-// Configure dotenv to load .env file
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Configure dotenv to load root .env file
+const rootDir = path.resolve(process.cwd());
+dotenv.config({ path: path.join(rootDir, '.env') });
 
-// Load environment variables from the server/.env file
-dotenv.config({ path: path.join(__dirname, '.env') });
+// Log environment variables for debugging
+console.log('Root directory:', rootDir);
+console.log('Environment variables loaded from:', path.join(rootDir, '.env'));
 
 // Verify environment variables are loaded
 if (!process.env.SLACK_WEBHOOK_URL && !process.env.SLACK_BOT_TOKEN) {
@@ -48,22 +49,22 @@ app.use(errorHandler);
 
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
+  const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, '../client/build')));
-  
+
   // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   });
 }
 
-// Create a serverless function handler
-export default app;
-
 // For local development
 if (process.env.NODE_ENV !== 'production') {
-  const port = process.env.PORT || 5002;
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  const PORT = process.env.PORT || 5002;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
 }
+
+// Create a serverless function handler
+export default app;
