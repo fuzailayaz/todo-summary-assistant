@@ -8,8 +8,7 @@
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "node vercel-build.js",
-    "vercel-build": "node vercel-build.js",
+    "build": "cd client && npm install && npm run build",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "install-all": "npm install && cd client && npm install && cd ../server && npm install",
@@ -20,7 +19,6 @@
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
-    "@vercel/node": "^2.15.3",
     "nodemon": "^2.0.22"
   },
   "engines": {
